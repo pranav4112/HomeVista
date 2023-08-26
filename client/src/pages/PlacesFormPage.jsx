@@ -22,7 +22,7 @@ export default function PlacesFormPage() {
     if (!id) {
       return;
     }
-    axios.get('/places/'+id).then(response => {
+    axios.get(import.meta.env.VITE_APP_API + '/places/'+id).then(response => {
        const {data} = response;
        setTitle(data.title);
        setAddress(data.address);

@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('./models/User.js');
-const Place = require('./models/Place.js').default;
+const Place = require('./models/Place.js');
 const Booking = require('./models/Booking.js');
 const cookieParser = require('cookie-parser');
 const imageDownloader = require('image-downloader');
@@ -32,12 +32,12 @@ mongoose.connect(process.env.MONGO_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
-.then(() => { 
-  console.log("DB connected") 
-})
-.catch((e) => { 
-  console.log(e) 
-});
+  .then(() => {
+    console.log("DB connected")
+  })
+  .catch((e) => {
+    console.log(e)
+  });
 
 async function uploadToS3(path, originalFilename, mimetype) {
   const client = new S3Client({
