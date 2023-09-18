@@ -1,40 +1,67 @@
 import axios from "axios";
-import {useState} from "react";
+import {useState,useEffect} from "react";
 import Image from "./Image.jsx";
 
-export default function PhotosUploader({addedPhotos,onChange}) {
+export default function PhotosUploader({addedPhotos,setAddedPhotos}) {
   const [photoLink,setPhotoLink] = useState('');
-  async function addPhotoByLink(ev) {
+
+
+  function addPhotoByLink(ev) {
     ev.preventDefault();
-    const {data:filename} = await axios.post(import.meta.env.VITE_APP_API + '/upload-by-link', {link: photoLink});
-    onChange(prev => {
-      return [...prev, filename];
+
+    setAddedPhotos(prev => {
+      return [...prev, photoLink];
     });
     setPhotoLink('');
   }
-  function uploadPhoto(ev) {
+  
+  const uploadPhoto = async (ev) => {
     const files = ev.target.files;
-    const data = new FormData();
-    for (let i = 0; i < files.length; i++) {
-      data.append('photos', files[i]);
-    }
-    axios.post(import.meta.env.VITE_APP_API + '/upload', data, {
-      headers: {'Content-type':'multipart/form-data'}
-    }).then(response => {
-      const {data:filenames} = response;
-      onChange(prev => {
-        return [...prev, ...filenames];
-      });
+    // console.log(files);
+    if (!files) return;
+
+    const readFileAsDataURL = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+
+    const base64Promises = Array.from(files).map(readFileAsDataURL);
+    const base64Results = await Promise.all(base64Promises);
+
+    const photosPromises = base64Results.map(async (base64Data) => {
+      const imageUrl = await axios.post(
+        import.meta.env.VITE_APP_API + '/places/upload-img',
+        { data: base64Data }
+      );
+      return imageUrl.data;
+    });
+
+    const addPhotos = await Promise.all(photosPromises);
+    const ph = addPhotos.map((photo) => {
+      return photo.data;
+    });
+
+    // console.log(ph);
+
+    setAddedPhotos((prev) => {
+      return [...prev, ...ph];
     })
+
   }
+
   function removePhoto(ev,filename) {
     ev.preventDefault();
-    onChange([...addedPhotos.filter(photo => photo !== filename)]);
+    setAddedPhotos([...addedPhotos.filter(photo => photo !== filename)]);
   }
+
   function selectAsMainPhoto(ev,filename) {
     ev.preventDefault();
-    onChange([filename,...addedPhotos.filter(photo => photo !== filename)]);
+    setAddedPhotos([filename,...addedPhotos.filter(photo => photo !== filename)]);
   }
+  
   return (
     <>
       <div className="flex gap-2">

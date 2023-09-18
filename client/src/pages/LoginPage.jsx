@@ -1,7 +1,7 @@
 import {Link, Navigate} from "react-router-dom";
 import {useContext, useState} from "react";
 import axios from "axios";
-import {UserContext} from "../UserContext.jsx";
+import {UserContext} from "../contextApi/UserContext.jsx";
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -11,7 +11,7 @@ export default function LoginPage() {
   async function handleLoginSubmit(ev) {
     ev.preventDefault();
     try {
-      const {data} = await axios.post(import.meta.env.VITE_APP_API + "/login", {email,password});
+      const {data} = await axios.post(import.meta.env.VITE_APP_API + "/user/login", {email,password});
       setUser(data);
       alert('Login successful');
       setRedirect(true);

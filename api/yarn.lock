@@ -693,7 +693,7 @@
     "@aws-sdk/types" "3.272.0"
     tslib "^2.3.1"
 
-"@aws-sdk/credential-providers@^3.186.0":
+"@aws-sdk/credential-providers@^3.186.0", "@aws-sdk/credential-providers@^3.188.0":
   version "3.245.0"
   resolved "https://registry.npmjs.org/@aws-sdk/credential-providers/-/credential-providers-3.245.0.tgz"
   integrity sha512-6Uhsxk6MOuWplejhPJf7XDhegHmcZfj8hwnF4mXFJ6u4b2RxWPQCnqPcA0+VoAzIMUqbjqvkSzmVjQelGFtjNg==
@@ -1624,6 +1624,13 @@
   dependencies:
     tslib "^2.3.1"
 
+"@mongodb-js/saslprep@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/@mongodb-js/saslprep/-/saslprep-1.1.0.tgz"
+  integrity sha512-Xfijy7HvfzzqiOAhAepF4SGN5e9leLkMvg/OPOF97XemjfVCYN/oWa75wnkc6mltMSTwY+XlbhWgUOJmkFspSw==
+  dependencies:
+    sparse-bitfield "^3.0.3"
+
 "@types/node@*":
   version "18.11.18"
   resolved "https://registry.npmjs.org/@types/node/-/node-18.11.18.tgz"
@@ -1738,6 +1745,11 @@ bson@^4.7.0:
   dependencies:
     buffer "^5.6.0"
 
+bson@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.npmjs.org/bson/-/bson-6.1.0.tgz"
+  integrity sha512-yiQ3KxvpVoRpx1oD1uPz4Jit9tAVTJgjdmjDKtUErkOoL9VNoF8Dd58qtAOL5E40exx2jvAT9sqdRSK/r+SHlA==
+
 buffer-equal-constant-time@1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/buffer-equal-constant-time/-/buffer-equal-constant-time-1.0.1.tgz"
@@ -1791,6 +1803,21 @@ chokidar@^3.5.2:
   optionalDependencies:
     fsevents "~2.3.2"
 
+cloudinary-core@^2.13.0:
+  version "2.13.0"
+  resolved "https://registry.npmjs.org/cloudinary-core/-/cloudinary-core-2.13.0.tgz"
+  integrity sha512-Nt0Q5I2FtenmJghtC4YZ3MZZbGg1wLm84SsxcuVwZ83OyJqG9CNIGp86CiI6iDv3QobaqBUpOT7vg+HqY5HxEA==
+
+cloudinary@^1.40.0:
+  version "1.40.0"
+  resolved "https://registry.npmjs.org/cloudinary/-/cloudinary-1.40.0.tgz"
+  integrity sha512-Fifkl8NRw/M+Enw4cKCXc6e0Or28c5y6RVGYS3OCLzT1W8EfBt416FURhLuuL/S4BCVv8bSilmnM746kCtth3g==
+  dependencies:
+    cloudinary-core "^2.13.0"
+    core-js "^3.30.1"
+    lodash "^4.17.21"
+    q "^1.5.1"
+
 concat-map@0.0.1:
   version "0.0.1"
   resolved "https://registry.npmjs.org/concat-map/-/concat-map-0.0.1.tgz"
@@ -1840,6 +1867,11 @@ cookie@0.5.0:
   version "0.5.0"
   resolved "https://registry.npmjs.org/cookie/-/cookie-0.5.0.tgz"
   integrity sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==
+
+core-js@^3.30.1:
+  version "3.32.2"
+  resolved "https://registry.npmjs.org/core-js/-/core-js-3.32.2.tgz"
+  integrity sha512-pxXSw1mYZPDGvTQqEc5vgIb83jGQKFGYWY76z4a7weZXUolw3G+OvpZqSRcfYOoOVUQJYEPsWeQK8pKEnUtWxQ==
 
 core-util-is@~1.0.0:
   version "1.0.3"
@@ -1916,6 +1948,11 @@ etag@~1.8.1:
   version "1.8.1"
   resolved "https://registry.npmjs.org/etag/-/etag-1.8.1.tgz"
   integrity sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg==
+
+express-async-handler@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.npmjs.org/express-async-handler/-/express-async-handler-1.2.0.tgz"
+  integrity sha512-rCSVtPXRmQSW8rmik/AIb2P0op6l7r1fMW538yyvTMltCO4xQEWMmobfrIxN2V1/mVrgxB8Az3reYF6yUZw37w==
 
 express@^4.18.2:
   version "4.18.2"
@@ -2152,7 +2189,7 @@ kareem@2.5.1:
   resolved "https://registry.npmjs.org/kareem/-/kareem-2.5.1.tgz"
   integrity sha512-7jFxRVm+jD+rkq3kY0iZDJfsO2/t4BBPeEb2qKn2lR/9KhuksYk5hxzfRYWMPV8P/x2d0kHD306YyWLzjjH+uA==
 
-lodash@^4.17.21:
+lodash@^4.17.21, lodash@>=4.0:
   version "4.17.21"
   resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
@@ -2220,13 +2257,22 @@ mkdirp@^0.5.4:
   dependencies:
     minimist "^1.2.6"
 
-mongodb-connection-string-url@^2.5.4:
+mongodb-connection-string-url@^2.5.4, mongodb-connection-string-url@^2.6.0:
   version "2.6.0"
   resolved "https://registry.npmjs.org/mongodb-connection-string-url/-/mongodb-connection-string-url-2.6.0.tgz"
   integrity sha512-WvTZlI9ab0QYtTYnuMLgobULWhokRjtC7db9LtcVfJ+Hsnyr5eo6ZtNAt3Ly24XZScGMelOcGtm7lSn0332tPQ==
   dependencies:
     "@types/whatwg-url" "^8.2.1"
     whatwg-url "^11.0.0"
+
+mongodb@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.npmjs.org/mongodb/-/mongodb-6.1.0.tgz"
+  integrity sha512-AvzNY0zMkpothZ5mJAaIo2bGDjlJQqqAbn9fvtVgwIIUPEfdrqGxqNjjbuKyrgQxg2EvCmfWdjq+4uj96c0YPw==
+  dependencies:
+    "@mongodb-js/saslprep" "^1.1.0"
+    bson "^6.1.0"
+    mongodb-connection-string-url "^2.6.0"
 
 mongodb@4.12.1:
   version "4.12.1"
@@ -2385,6 +2431,11 @@ punycode@^2.1.1:
   version "2.2.0"
   resolved "https://registry.npmjs.org/punycode/-/punycode-2.2.0.tgz"
   integrity sha512-LN6QV1IJ9ZhxWTNdktaPClrNfp8xdSAYS0Zk2ddX7XsXZAxckMHPCBcHRo0cTcEIgYPRiGEkmji3Idkh2yFtYw==
+
+q@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.npmjs.org/q/-/q-1.5.1.tgz"
+  integrity sha512-kV/CThkXo6xyFEZUugw/+pIOywXcDbFYgSct5cT3gqlbkBE1SJdwy6UQoZvodiWF/ckQLZyDE/Bu1M6gVu5lVw==
 
 qs@6.11.0:
   version "6.11.0"
