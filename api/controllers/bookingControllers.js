@@ -28,8 +28,13 @@ const getBookings = asyncHandler(async (req, res) => {
 const makeBooking = asyncHandler(async (req, res) => {
     const userData = req.user;
     const {
-        place, checkIn, checkOut, numberOfGuests, name, phone, price,
+        place, placeOwner, checkIn, checkOut, numberOfGuests, name, phone, price,
     } = req.body;
+
+    if (placeOwner.toString() == userData._id.toString()) {
+        res.status(400);
+        throw new Error("You cannot book your own place");
+    }
 
     if (!checkIn || !checkOut || !numberOfGuests || !name || !phone || !price) {
         res.status(400);

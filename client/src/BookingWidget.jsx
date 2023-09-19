@@ -28,6 +28,7 @@ export default function BookingWidget({place}) {
     const response = await axios.post(import.meta.env.VITE_APP_API  + '/bookings', {
       checkIn,checkOut,numberOfGuests,name,phone,
       place:place._id,
+      placeOwner : place.owner,
       price:numberOfNights * place.price,
     });
     const bookingId = response.data._id;
