@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/* body{
-    @apply bg-bcgr text-tx;
-} */
+body{
+    @apply bg-bcgr text-txt;
+}
 
 input[type="text"],input[type="password"],
 input[type="email"],input[type="number"],

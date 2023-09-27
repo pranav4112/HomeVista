@@ -6,9 +6,9 @@ export default function RegisterPage() {
   const [name,setName] = useState('');
   const [email,setEmail] = useState('');
   const [password,setPassword] = useState('');
-  // console.log(import.meta.env.VITE_APP_API);
-  async function registerUser(ev) {
-    ev.preventDefault();
+
+  const  registerUser = async (e) => {
+    e.preventDefault();
     try {
       await axios.post(
         import.meta.env.VITE_APP_API + "/user/register", {
@@ -17,33 +17,45 @@ export default function RegisterPage() {
         password,
       });
       alert('Registration successful. Now you can log in');
-    } catch (e) {
+    } catch (err) {
       alert('Registration failed. Please try again later');
     }
   }
   return (
-    <div className="mt-4 grow flex items-center justify-around">
-      <div className="mb-64">
-        <h1 className="text-4xl text-center mb-4">Register</h1>
-        <form className="max-w-md mx-auto" onSubmit={registerUser}>
-          <input type="text"
-                 placeholder="John Doe"
-                 value={name}
-                 onChange={ev => setName(ev.target.value)} />
-          <input type="email"
-                 placeholder="your@email.com"
-                 value={email}
-                 onChange={ev => setEmail(ev.target.value)} />
-          <input type="password"
-                 placeholder="password"
-                 value={password}
-                 onChange={ev => setPassword(ev.target.value)} />
-          <button className="primary">Register</button>
-          <div className="text-center py-2 text-gray-500">
-            Already a member? <Link className="underline text-black" to={'/login'}>Login</Link>
+      <div className="flex flex-col items-center justify-center px-6 py-8 md:flex-1 lg:py-0">
+          <div className="w-full rounded-lg shadow border md:mt-0 sm:max-w-md xl:p-0 bg-gray-800 border-gray-500">
+              <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+                  <h1 className="text-xl font-bold leading-tight tracking-tight  md:text-2xl text-white">
+                      Sign up for your account
+                  </h1>
+                  <form className="space-y-4 md:space-y-6" onSubmit={registerUser}>
+                      <div>
+                          <label for="username" className="block mb-2 text-sm font-medium text-white">Username</label>
+                          <input type="text" name="username" id="username" className="block w-full p-2.5 sm:text-sm border rounded-lg bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" placeholder="John_Doe" required 
+                            value={name}
+                            onChange={e => setName(e.target.value)}/>
+                      </div>
+                      <div>
+                          <label for="email" className="block mb-2 text-sm font-medium text-white">Your email</label>
+                          <input type="email" name="email" id="email" className="block w-full p-2.5 sm:text-sm border rounded-lg bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" placeholder="your@email.com" required 
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}/>
+                      </div>
+                      <div>
+                          <label for="password" className="block mb-2 text-sm font-medium  text-white">Password</label>
+                          <input type="password" name="password" id="password" placeholder="••••••••" className="block w-full p-2.5 sm:text-sm border rounded-lg bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" required
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}/>
+                      </div>
+                      <button type="submit" className="w-full text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-yellow-400 hover:bg-yellow-500 focus:ring-primary">Sign up</button>
+                      <p className="text-sm font-light text-gray-400">
+                          Already have an account? <Link to="/login" className="font-medium hover:underline text-primary">Sign in</Link>
+                      </p>
+                  </form>
+              </div>
           </div>
-        </form>
       </div>
-    </div>
+
+    
   );
 }
