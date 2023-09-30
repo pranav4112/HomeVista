@@ -3,16 +3,16 @@ module.exports = {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/flowbite/**/*.js"
+    "./node_modules/flowbite/**/*.{js,jsx}",
+    "node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}"
   ],
   theme: {
     extend: {
       colors: {
-        primary:'rgb(227 160 8 / 1)',
-        // primary: '#F5385D',
-        // bcgr : '#000',
-        bcgr : '#0F1C28',
-        txt : '#D9D7D5',
+        primary: '#C27803',
+        dark_bg: '#030C10',
+        bcgr: '#0F1C28',
+        txt: '#D9D7D5',
       },
     },
   },

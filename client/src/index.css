@@ -3,7 +3,21 @@
 @tailwind utilities;
 
 body{
-    @apply bg-bcgr text-txt;
+    @apply bg-dark_bg text-gray-300;
+}
+
+.slider{
+    @apply bg-cover rounded-lg !important;
+}
+[type="date"]::-webkit-calendar-picker-indicator {
+    @apply  bg-gray-300 rounded-full p-2;
+}
+input[type=checkbox] {
+    background-color: black;
+}
+input[type=checkbox]:checked {
+    background-color: black;
+    border: 2px solid orange;
 }
 
 input[type="text"],input[type="password"],
@@ -15,10 +29,15 @@ textarea{
 textarea{
     height: 140px;
 }
+/* textarea::-webkit-scrollbar-thumb{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+} */
+
 button{
     @apply bg-gray-300;
 }
 button.primary{
-    background-color: #F5385D;
-    @apply bg-primary p-2 w-full text-white rounded-2xl;
+    @apply bg-yellow-500 p-2 w-full text-txt text-lg font-semibold rounded-2xl hover:bg-yellow-600;
 }

@@ -1,8 +1,8 @@
-import PhotosUploader from "../PhotosUploader.jsx";
-import Perks from "../Perks.jsx";
+import PhotosUploader from "../components/PlaceFormSection/PhotosUploader.jsx";
+import Perks from "../components/PlaceFormSection/Perks.jsx";
 import {useEffect, useState} from "react";
 import axios from "axios";
-import AccountNav from "../AccountNav";
+import AccountNav from "../components/AccountNavbar/AccountNav.jsx";
 import {Navigate, useParams} from "react-router-dom";
 
 export default function PlacesFormPage() {
@@ -38,12 +38,12 @@ export default function PlacesFormPage() {
   }, [id]);
   function inputHeader(text) {
     return (
-      <h2 className="text-2xl mt-4">{text}</h2>
+      <h2 className="text-2xl text-txt mb-2">{text}</h2>
     );
   }
   function inputDescription(text) {
     return (
-      <p className="text-gray-500 text-sm">{text}</p>
+      <p className="text-gray-400 text-sm mb-2">{text}</p>
     );
   }
   function preInput(header,description) {
@@ -55,8 +55,8 @@ export default function PlacesFormPage() {
     );
   }
 
-  async function savePlace(ev) {
-    ev.preventDefault();
+  async function savePlace(e) {
+    e.preventDefault();
     const placeData = {
       title, address, addedPhotos,
       description, perks, extraInfo,
@@ -84,48 +84,75 @@ export default function PlacesFormPage() {
     <div>
       <AccountNav />
       <form onSubmit={savePlace}>
-        {preInput('Title', 'Title for your place. should be short and catchy as in advertisement')}
-        <input type="text" value={title} onChange={ev => setTitle(ev.target.value)} placeholder="title, for example: My lovely apt"/>
-        {preInput('Address', 'Address to this place')}
-        <input type="text" value={address} onChange={ev => setAddress(ev.target.value)}placeholder="address"/>
-        {preInput('Photos','more = better')}
-        <PhotosUploader addedPhotos={addedPhotos} setAddedPhotos={setAddedPhotos} />
-        {preInput('Description','description of the place')}
-        <textarea value={description} onChange={ev => setDescription(ev.target.value)} />
-        {preInput('Perks','select all the perks of your place')}
-        <div className="grid mt-2 gap-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
-          <Perks selected={perks} onChange={setPerks} />
+        <div className=" rounded-2xl grid grid-cols-2 gap-3">
+          <div className="bg-bcgr p-3 rounded-2xl">
+            {preInput('Title', 'Title for your place. should be short and catchy as in advertisement')}
+            <input type="text" className="bg-dark_bg text-txt" value={title} onChange={ev => setTitle(ev.target.value)} placeholder="title, for example: My lovely apt"/>
+          </div>
+
+          <div className="bg-bcgr p-3 rounded-2xl">
+            {preInput('Address', 'Address to this place')}
+            <input type="text" className="bg-dark_bg text-txt" value={address} onChange={ev => setAddress(ev.target.value)} placeholder="Address..."/>
+          </div>
+          
+          <div className="bg-bcgr p-3 rounded-2xl col-span-2">
+            {preInput('Photos','more = better')}
+            <PhotosUploader addedPhotos={addedPhotos} setAddedPhotos={setAddedPhotos} />
+          </div>
+          
+          <div className="bg-bcgr p-3 rounded-2xl">
+            {preInput('Description','description of the place')}
+            <textarea className="bg-dark_bg text-txt" placeholder="Add description about this place..." value={description} onChange={ev => setDescription(ev.target.value)} />
+          </div>
+          
+          <div className="bg-bcgr p-3 rounded-2xl">
+            {preInput('Perks','select all the perks of your place')}
+            <Perks selected={perks} onChange={setPerks} />
+          </div>
+          
+          <div className="bg-bcgr p-3 rounded-2xl col-span-2">
+            {preInput('Check in&out times','add check in and out times, remember to have some time window for cleaning the room between guests')}
+            <div className="grid gap-3 grid-cols-2 ">
+              <div>
+                <h3 className="mt-2 mb-1">Check in time</h3>
+                <input type="text"
+                        className="bg-dark_bg text-txt" 
+                      value={checkIn}
+                      onChange={ev => setCheckIn(ev.target.value)}
+                      placeholder="14"/>
+              </div>
+              <div>
+                <h3 className="mt-2 mb-1">Check out time</h3>
+                <input type="text"
+                        className="bg-dark_bg text-txt" 
+                      value={checkOut}
+                      onChange={ev => setCheckOut(ev.target.value)}
+                      placeholder="11" />
+              </div>
+              <div>
+                <h3 className="mt-2 mb-1">Max number of guests</h3>
+                <input type="number" className="bg-dark_bg text-txt" value={maxGuests}
+                      onChange={ev => setMaxGuests(ev.target.value)}
+                      placeholder="Maximum Guests..."/>
+              </div>
+              <div>
+                <h3 className="mt-2 mb-1">Price per night</h3>
+                <input type="number" className="bg-dark_bg text-txt" value={price}
+                      onChange={ev => setPrice(ev.target.value)}
+                      placeholder="Per night price.."/>
+              </div>
+            </div>
+          </div>     
+
+          <div className="bg-bcgr p-3 rounded-2xl col-span-2">
+            {preInput('Extra info','house rules, terms/conditions, etc')}
+            <textarea className="bg-dark_bg text-txt" placeholder="Add some extra info..."  value={extraInfo} onChange={ev => setExtraInfo(ev.target.value)} />
+          </div>
+          
+          <div className=" col-span-2">
+            <button className="primary my-4 ">Save</button>
+          </div>
         </div>
-        {preInput('Extra info','house rules, etc')}
-        <textarea value={extraInfo} onChange={ev => setExtraInfo(ev.target.value)} />
-        {preInput('Check in&out times','add check in and out times, remember to have some time window for cleaning the room between guests')}
-        <div className="grid gap-2 grid-cols-2 md:grid-cols-4">
-          <div>
-            <h3 className="mt-2 -mb-1">Check in time</h3>
-            <input type="text"
-                   value={checkIn}
-                   onChange={ev => setCheckIn(ev.target.value)}
-                   placeholder="14"/>
-          </div>
-          <div>
-            <h3 className="mt-2 -mb-1">Check out time</h3>
-            <input type="text"
-                   value={checkOut}
-                   onChange={ev => setCheckOut(ev.target.value)}
-                   placeholder="11" />
-          </div>
-          <div>
-            <h3 className="mt-2 -mb-1">Max number of guests</h3>
-            <input type="number" value={maxGuests}
-                   onChange={ev => setMaxGuests(ev.target.value)}/>
-          </div>
-          <div>
-            <h3 className="mt-2 -mb-1">Price per night</h3>
-            <input type="number" value={price}
-                   onChange={ev => setPrice(ev.target.value)}/>
-          </div>
-        </div>
-        <button className="primary my-4">Save</button>
       </form>
     </div>
   );

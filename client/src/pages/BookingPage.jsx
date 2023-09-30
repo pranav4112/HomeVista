@@ -1,9 +1,9 @@
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
-import AddressLink from "../AddressLink";
-import PlaceGallery from "../PlaceGallery";
-import BookingDates from "../BookingDates";
+import AddressLink from "../components/LocationLink/AddressLink";
+import PlaceGallery from "../components/PhotoGallery/PlaceGallery";
+import BookingDates from "../components/BookingSection/BookingDates";
 
 export default function BookingPage() {
   const {id} = useParams();
@@ -24,17 +24,16 @@ export default function BookingPage() {
   }
 
   return (
-    <div className="my-8">
+    <div className="my-10">
       <h1 className="text-3xl">{booking.place.title}</h1>
       <AddressLink className="my-2 block">{booking.place.address}</AddressLink>
-      <div className="bg-gray-200 p-6 my-6 rounded-2xl flex items-center justify-between">
+      <div className="bg-dark_bg my-6 rounded-2xl flex items-center justify-between">
         <div>
           <h2 className="text-2xl mb-4">Your booking information:</h2>
           <BookingDates booking={booking} />
         </div>
-        <div className="bg-primary p-6 text-white rounded-2xl">
-          <div>Total price</div>
-          <div className="text-3xl">${booking.price}</div>
+        <div className="bg-yellow-400 p-4 font-semibold text-xl text-dark_bg rounded-3xl">
+          <div>Total price: <span className="font-bold">${booking.price}</span> </div>
         </div>
       </div>
       <PlaceGallery place={booking.place} />

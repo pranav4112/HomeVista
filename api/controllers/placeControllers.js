@@ -5,8 +5,6 @@ const jwt = require('jsonwebtoken');
 const cloudinary = require('../config/cloudinary');
 
 // const bcryptSalt = bcrypt.genSaltSync(10);
-// const jwtSecret = 'fasefraw4r5r3wq45wdfgw34twdfg';
-
 
 //Get all places
 // GET -- api/places

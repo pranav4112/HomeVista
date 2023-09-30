@@ -1,4 +1,3 @@
-import './App.css'
 import {Route, Routes} from "react-router-dom";
 import IndexPage from "./pages/IndexPage.jsx";
 import LoginPage from "./pages/LoginPage";
@@ -7,10 +6,10 @@ import RegisterPage from "./pages/RegisterPage";
 import axios from "axios";
 import {UserContextProvider} from "./contextApi/UserContext";
 import ProfilePage from "./pages/ProfilePage.jsx";
-import PlacesPage from "./pages/PlacesPage";
+import UserPlacesPage from "./pages/UserPlacesPage";
 import PlacesFormPage from "./pages/PlacesFormPage";
 import PlacePage from "./pages/PlacePage";
-import BookingsPage from "./pages/BookingsPage";
+import UserBookingsPage from "./pages/UserBookingsPage";
 import BookingPage from "./pages/BookingPage";
 
 // axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL;
@@ -25,11 +24,11 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/account" element={<ProfilePage />} />
-          <Route path="/account/places" element={<PlacesPage />} />
+          <Route path="/account/places" element={<UserPlacesPage />} />
           <Route path="/account/places/new" element={<PlacesFormPage />} />
           <Route path="/account/places/:id" element={<PlacesFormPage />} />
           <Route path="/place/:id" element={<PlacePage />} />
-          <Route path="/account/bookings" element={<BookingsPage />} />
+          <Route path="/account/bookings" element={<UserBookingsPage />} />
           <Route path="/account/bookings/:id" element={<BookingPage />} />
         </Route>
       </Routes>
