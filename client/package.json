@@ -27,5 +27,8 @@
     "@vitejs/plugin-react": "^3.0.0",
     "react-error-overlay": "^6.0.9",
     "vite": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=14.20.1"
   }
 }
