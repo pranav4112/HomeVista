@@ -45,7 +45,7 @@ export default function PlacePage() {
         <p>Check-in: {place.checkIn}</p><br/>
         <p>Check-out: {place.checkOut}</p><br/>
         <p>Max number of guests: {place.maxGuests}</p>
-      </div>
+      </div> 
 
       <div className="row-span-2 bg-bcgr rounded-2xl p-5">
         <h2 className="font-semibold text-2xl mb-4">Perks offered</h2>
