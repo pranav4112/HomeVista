@@ -19,7 +19,8 @@ app.use(express.urlencoded({ limit: "10mb", extended: true, parameterLimit: 5000
 app.use(cookieParser());
 app.use(cors({
   credentials: true,
-  origin: 'http://localhost:5173',
+  origin: 'https://homevista-api.onrender.com',
+  // origin: 'http://localhost:5173',
 }));
 
 //DB connection
@@ -31,7 +32,7 @@ app.use('/api/user', userRoutes);
 app.use('/api/places', placeRoutes);
 app.use('/api/bookings', bookingRoutes);
 // Error middleware
-app.use(errorHandler); 
+app.use(errorHandler);
 
 
 app.listen(PORT, () => {
