@@ -1,29 +1,46 @@
 import {Link} from "react-router-dom";
 import {useState} from "react";
 import axios from "axios";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function RegisterPage() {
   const [name,setName] = useState('');
   const [email,setEmail] = useState('');
   const [password,setPassword] = useState('');
+  const [redirect, setRedirect] = useState(false);
 
   const  registerUser = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(
+      const {data} = await axios.post(
         import.meta.env.VITE_APP_API + "/user/register", {
         name,
         email,
         password,
       });
-      alert('Registration successful. Now you can log in');
+      toast.success(`Hello ${data.name}`, {
+        position : "top-right",
+        autoClose: 3000,
+        theme: "dark",
+        });
+      setRedirect(true);
     } catch (err) {
-      alert('Registration failed. Please try again later');
+      toast.error(`${err.response.data.message}`, {
+        position: "top-right",
+        autoClose: 3000,
+        theme: "dark",
+        });
     }
   }
+
+  if (redirect) {
+    return <Navigate to={'/'} />
+  }
+
   return (
       <div className="flex flex-col items-center justify-center px-6 py-8 md:flex-1 lg:py-0">
-          <div className="w-full rounded-lg shadow border md:mt-0 sm:max-w-md xl:p-0 bg-gray-800 border-gray-500">
+          <div className="w-full rounded-lg shadow border md:mt-0 sm:max-w-md xl:p-0 bg-bcgr border-gray-500">
               <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                   <h1 className="text-xl font-bold leading-tight tracking-tight  md:text-2xl text-white">
                       Sign up for your account

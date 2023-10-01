@@ -83,7 +83,8 @@ const updatePlace = asyncHandler(async (req, res) => {
 
 });
 
-
+// Uploading image on Cloudinary 
+// POST -- api/place/upload-img
 const uploadImage = asyncHandler(async (req, res) => {
   const imgFile = req.body.data;
 
@@ -101,16 +102,5 @@ const uploadImage = asyncHandler(async (req, res) => {
     throw new Error("Image not uploaded or server error");
   }
 })
-
-// const uploadImageByLink = asyncHandler(async (req, res) => {
-//   const { link } = req.body;
-//   const newName = 'photo' + Date.now() + '.jpg';
-//   await imageDownloader.image({
-//     url: link,
-//     dest: '/tmp/' + newName,
-//   });
-//   const url = await uploadToS3('/tmp/' + newName, newName, mime.lookup('/tmp/' + newName));
-//   res.json(url);
-// })
 
 module.exports = { getAllPlaces, getPlace, createPlace, updatePlace, uploadImage };

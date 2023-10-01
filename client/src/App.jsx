@@ -1,3 +1,4 @@
+import "./App.css";
 import {Route, Routes} from "react-router-dom";
 import IndexPage from "./pages/IndexPage.jsx";
 import LoginPage from "./pages/LoginPage";
@@ -11,12 +12,16 @@ import PlacesFormPage from "./pages/PlacesFormPage";
 import PlacePage from "./pages/PlacePage";
 import UserBookingsPage from "./pages/UserBookingsPage";
 import BookingPage from "./pages/BookingPage";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-// axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL;
+
 axios.defaults.withCredentials = true;
 
 function App() {
   return (
+    <>
+    <ToastContainer/>
     <UserContextProvider>
       <Routes>
         <Route path="/" element={<Layout />}>
@@ -33,6 +38,7 @@ function App() {
         </Route>
       </Routes>
     </UserContextProvider>
+    </>
   )
 }
 

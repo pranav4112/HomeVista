@@ -3,6 +3,8 @@ import {differenceInCalendarDays} from "date-fns";
 import axios from "axios";
 import {Navigate} from "react-router-dom";
 import {UserContext} from "../../contextApi/UserContext.jsx";
+import {toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function BookingWidget({place}) {
   const [checkIn,setCheckIn] = useState('');
@@ -13,11 +15,6 @@ export default function BookingWidget({place}) {
   const [redirect,setRedirect] = useState('');
   const {user} = useContext(UserContext);
 
-  // useEffect(() => {
-  //   if (user) {
-  //     setName(user.name);
-  //   }
-  // }, [user]);
 
   let numberOfNights = 0;
   if (checkIn && checkOut) {
@@ -25,14 +22,38 @@ export default function BookingWidget({place}) {
   }
 
   async function bookThisPlace() {
-    const response = await axios.post(import.meta.env.VITE_APP_API  + '/bookings', {
-      checkIn,checkOut,numberOfGuests,name,phone,
-      place:place._id,
-      placeOwner : place.owner,
-      price:numberOfNights * place.price,
-    });
-    const bookingId = response.data._id;
-    setRedirect(`/account/bookings/${bookingId}`);
+    try{
+      const response = await axios.post(import.meta.env.VITE_APP_API  + '/bookings', {
+        checkIn,checkOut,numberOfGuests,name,phone,
+        place:place._id,
+        placeOwner : place.owner,
+        price:numberOfNights * place.price,
+      });
+      toast.success('Booked Successfully', {
+        position : "top-right",
+        autoClose: 3000,
+        theme: "dark",
+        });
+      const bookingId = response.data._id;
+      setRedirect(`/account/bookings/${bookingId}`);
+    }
+    catch (error) {
+      if(error.response.status === 401){
+        toast.warning(`${error.response.data.message}`, {
+          position: "top-right",
+          autoClose: 3000,
+          theme: "dark",
+          });
+        setRedirect("/login");
+      }
+      else{
+        toast.warning(`${error.response.data.message}`, {
+          position: "top-right",
+          autoClose: 3000,
+          theme: "dark",
+          });
+      }
+    } 
   }
 
   if (redirect) {

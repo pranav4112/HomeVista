@@ -2,6 +2,8 @@ import {Link, Navigate} from "react-router-dom";
 import {useContext, useState} from "react";
 import axios from "axios";
 import {UserContext} from "../contextApi/UserContext.jsx";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -13,10 +15,18 @@ export default function LoginPage() {
     try {
       const {data} = await axios.post(import.meta.env.VITE_APP_API + "/user/login", {email,password});
       setUser(data);
-      alert('Login successful');
+      toast.success(`Welcome ${data.name}`, {
+        position : "top-right",
+        autoClose: 3000,
+        theme: "dark",
+        });
       setRedirect(true);
     } catch (err) {
-      alert('Login failed');
+      toast.error(`${err.response.data.message}`, {
+        position: "top-right",
+        autoClose: 3000,
+        theme: "dark",
+        });
     }
   }
 
@@ -26,7 +36,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex flex-col items-center justify-center px-6 py-8 md:flex-1 lg:py-0 "> 
-      <div className="w-full rounded-lg shadow border md:mt-0 sm:max-w-md xl:p-0 bg-gray-800 border-gray-500">
+      <div className="w-full rounded-lg shadow border md:mt-0 sm:max-w-md xl:p-0 bg-bcgr border-gray-500">
         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight  md:text-2xl text-white">
                 Sign in to your account

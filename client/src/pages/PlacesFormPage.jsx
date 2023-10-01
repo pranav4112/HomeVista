@@ -4,6 +4,8 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import AccountNav from "../components/AccountNavbar/AccountNav.jsx";
 import {Navigate, useParams} from "react-router-dom";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function PlacesFormPage() {
   const {id} = useParams();
@@ -64,14 +66,56 @@ export default function PlacesFormPage() {
     };
     if (id) {
       // update
-      await axios.put(import.meta.env.VITE_APP_API + '/places', {
-        id, ...placeData
-      });
-      setRedirect(true);
+      try{
+        await axios.put(import.meta.env.VITE_APP_API + '/places', {
+          id, ...placeData
+        });
+        toast.success("Property updated", {
+          position : "top-right",
+          autoClose: 3000,
+          theme: "dark",
+          });
+        setRedirect(true);
+      }
+      catch(err){
+        toast.warning(`${err.response.data.message}`, {
+          position: "top-right",
+          autoClose: 3000,
+          theme: "dark",
+          });
+          <Navigate to='/login' />
+        
+      }
+      
     } else {
       // new place
-      await axios.post(import.meta.env.VITE_APP_API + '/places', placeData);
+      try{
+        await axios.post(import.meta.env.VITE_APP_API + '/places', placeData);
+        toast.success("Property Added successfully", {
+        position : "top-right",
+        autoClose: 3000,
+        theme: "dark",
+        });
       setRedirect(true);
+      }
+      catch(err){
+        if(err.response.status === 401){
+        toast.warning(`${err.response.data.message}`, {
+          position: "top-right",
+          autoClose: 3000,
+          theme: "dark",
+          });
+          <Navigate to='/login' />
+        }
+        else if(err.response.status === 400){
+          toast.warning(`${err.response.data.message}`, {
+            position: "top-right",
+            autoClose: 3000,
+            theme: "dark",
+            });
+        }
+      }
+      
     }
 
   }

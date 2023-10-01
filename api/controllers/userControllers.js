@@ -1,10 +1,8 @@
 const asyncHandler = require('express-async-handler');
 const User = require('../models/User');
 const Place = require('../models/Place');
-
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
 const bcryptSalt = bcrypt.genSaltSync(10);
 
 // Register user
@@ -28,7 +26,7 @@ const createUser = asyncHandler(async (req, res) => {
     password: bcrypt.hashSync(password, bcryptSalt),
   });
 
-  if(userDoc){
+  if (userDoc) {
     jwt.sign({
       email: userDoc.email,
       id: userDoc._id
@@ -40,10 +38,10 @@ const createUser = asyncHandler(async (req, res) => {
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7days
         // maxAge: 20 * 1000 // 20 sec
       })
-      .status(201).json(userDoc);
+        .status(201).json(userDoc);
     });
   }
-  else{
+  else {
     res.status(400);
     throw new Error("User data is not valid");
   }
@@ -74,16 +72,33 @@ const loginUser = asyncHandler(async (req, res) => {
           maxAge: 7 * 24 * 60 * 60 * 1000, // 7days
           // maxAge: 20 * 1000 // 20 sec
         })
-        .json(userDoc);
+          .json(userDoc);
       });
     } else {
-      res.status(422).json('Incorrect password');
+      res.status(400);
+      throw new Error('Incorrect password');
     }
   } else {
-    res.status(400).json("email or password is not valid");
+    res.status(400);
+    throw new Error("email or password is not valid");
+
   }
 });
 
+// Taking User data
+// GET -- api/user/profile
+const userData = asyncHandler(async (req, res) => {
+  const { token } = req.cookies;
+  if (token) {
+    jwt.verify(token, process.env.JWT_SECRET, {}, async (err, userData) => {
+      if (err) throw err;
+      const { name, email, _id } = await User.findById(userData.id);
+      res.json({ name, email, _id });
+    });
+  } else {
+    res.json(null);
+  }
+});
 
 // Logout user
 // POST -- api/user/logout
@@ -97,17 +112,17 @@ const logoutUser = asyncHandler(async (req, res) => {
 const userPlaces = asyncHandler(async (req, res) => {
   const user = req.user;
   const places = await Place.find({ owner: user._id });
-  if(places){
+  if (places) {
     res.status(200).json(places);
   }
-  else{
+  else {
     res.status(404);
     throw new Error("places not found");
   }
 });
 
 
-module.exports = { createUser, loginUser, logoutUser, userPlaces };
+module.exports = { createUser, loginUser, logoutUser, userPlaces, userData };
 
 
 

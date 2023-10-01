@@ -9,7 +9,7 @@ export function UserContextProvider({children}) {
   const [ready,setReady] = useState(false);
   useEffect(() => {
     if (!user) {
-      axios.get(import.meta.env.VITE_APP_API + '/profile').then(({data}) => {
+      axios.get(import.meta.env.VITE_APP_API + '/user/profile').then(({data}) => {
         setUser(data);
         setReady(true);
       });

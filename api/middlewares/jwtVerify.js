@@ -8,9 +8,7 @@ const jwtVerify = asyncHandler(async (req, res, next) => {
     if (token) {
         jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
             if (err) {
-                res.status(401).json({
-                    message: err.message
-                });
+                res.status(401);
                 throw new Error("User is not authorized");
             }
 
@@ -22,7 +20,7 @@ const jwtVerify = asyncHandler(async (req, res, next) => {
     }
     else {
         res.status(401);
-        throw new Error("User is not authorized or token is missing");
+        throw new Error("Login to proceed");
     }
 
 })

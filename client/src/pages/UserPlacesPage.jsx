@@ -25,12 +25,12 @@ export default function PlacesPage() {
       </div>
       <div className="mt-6 flex flex-col gap-3">
         {places.length > 0 && places.map(place => (
-          <Link to={'/account/places/'+place._id}  className="flex gap-5 bg-bcgr text-txt rounded-2xl overflow-hidden">
+          <Link to={'/account/places/'+place._id}  className="flex gap-3 bg-bcgr text-txt rounded-2xl overflow-hidden">
             <div className="w-1/3">
-              <PlaceImg place={place} />
+              <PlaceImg className={"w-full h-full"} place={place} />
             </div>
             <div className="p-5 pr-3 w-2/3 flex flex-col gap-3 text-gray-300">
-              <h2 className="text-xl text-center">{place.title}</h2>
+              <h2 className="text-xl font-semibold text-center">{place.title}</h2>
               <p className="mt-2 text-gray-400">{place.description}</p>
             </div>
             
