@@ -31,7 +31,7 @@ const errorHandler = (err, req, res, next) => {
                 message: err.message,
             });
         default:
-            console.log("No Error, All good !");
+            console.log("Unknown error");
             break;
     }
 };

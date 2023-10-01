@@ -1,6 +1,8 @@
-import {Link} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 import {useState} from "react";
 import axios from "axios";
+import {UserContext} from "../contextApi/UserContext.jsx";
+import { useContext } from "react";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -9,6 +11,7 @@ export default function RegisterPage() {
   const [email,setEmail] = useState('');
   const [password,setPassword] = useState('');
   const [redirect, setRedirect] = useState(false);
+  const {setUser} = useContext(UserContext);
 
   const  registerUser = async (e) => {
     e.preventDefault();
@@ -19,12 +22,14 @@ export default function RegisterPage() {
         email,
         password,
       });
+      setUser(data);
       toast.success(`Hello ${data.name}`, {
         position : "top-right",
         autoClose: 3000,
         theme: "dark",
         });
-      setRedirect(true);
+        setRedirect(true);
+
     } catch (err) {
       toast.error(`${err.response.data.message}`, {
         position: "top-right",
