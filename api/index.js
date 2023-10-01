@@ -20,6 +20,7 @@ app.use(cookieParser());
 app.use(cors({
   credentials: true,
   origin: 'https://homevista-api.onrender.com',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   // origin: 'http://localhost:5173',
 }));
 
