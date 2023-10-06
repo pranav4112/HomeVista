@@ -80,7 +80,7 @@ const loginUser = asyncHandler(async (req, res) => {
     }
   } else {
     res.status(400);
-    throw new Error("email or password is not valid");
+    throw new Error("email or password is not valid"); //yay
 
   }
 });
