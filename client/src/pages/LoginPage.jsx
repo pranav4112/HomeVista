@@ -14,12 +14,14 @@ export default function LoginPage() {
     e.preventDefault();
     try {
       const {data} = await axios.post(import.meta.env.VITE_APP_API + "/user/login", {email,password});
-      setUser(data);
-      toast.success(`Welcome ${data.name}`, {
+      console.log(data);
+      setUser(data.user);
+      toast.success(`Welcome ${data.user.name}`, {
         position : "top-right",
         autoClose: 3000,
         theme: "dark",
         });
+        localStorage.setItem('token', data.token);
       setRedirect(true);
     } catch (err) {
       toast.error(`${err.response.data.message}`, {
@@ -43,13 +45,13 @@ export default function LoginPage() {
             </h1>
             <form className="space-y-4 md:space-y-6" onSubmit={handleLoginSubmit}>
                 <div>
-                    <label for="email" className="block mb-2 text-sm font-medium text-white">Your email</label>
+                    <label htmlFor="email" className="block mb-2 text-sm font-medium text-white">Your email</label>
                     <input type="email" name="email" id="email" className="block w-full p-2.5 sm:text-sm border rounded-lg bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" placeholder="your@email.com" required 
                     value={email}
                     onChange={e => setEmail(e.target.value)}/>
                 </div>
                 <div>
-                    <label for="password" className="block mb-2 text-sm font-medium  text-white">Password</label>
+                    <label htmlFor="password" className="block mb-2 text-sm font-medium  text-white">Password</label>
                     <input type="password" name="password" id="password" placeholder="••••••••" className="block w-full p-2.5 sm:text-sm border rounded-lg bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" required
                     value={password}
                     onChange={e => setPassword(e.target.value)}/>
@@ -60,7 +62,7 @@ export default function LoginPage() {
                           <input id="remember" aria-describedby="remember" type="checkbox" className="w-4 h-4 border rounded bg-gray-700 border-gray-600 focus:ring-primary ring-offset-gray-800" required="" />
                         </div>
                         <div className="ml-3 text-sm">
-                          <label for="remember" className="text-gray-300">Remember me</label>
+                          <label htmlFor="remember" className="text-gray-300">Remember me</label>
                         </div>
                     </div>
                     <a href="#" className="text-sm font-medium  hover:underline text-primary">Forgot password?</a>

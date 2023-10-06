@@ -3,7 +3,7 @@ const asyncHandler = require('express-async-handler');
 const jwt = require('jsonwebtoken');
 
 const jwtVerify = asyncHandler(async (req, res, next) => {
-    const token = req.cookies.token;
+    const token = req.query.token;
 
     if (token) {
         jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {

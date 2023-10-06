@@ -17,11 +17,12 @@ export default function ProfilePage() {
 
   async function logout() {
     await axios.post(import.meta.env.VITE_APP_API + '/user/logout');
-    toast.success("Logout successfully", {
+    toast.success("Logged out successfully", {
       position : "top-right",
       autoClose: 3000,
       theme: "dark",
       });
+      localStorage.removeItem('token');
     setRedirect('/');
     setUser(null);
   }
@@ -43,7 +44,7 @@ export default function ProfilePage() {
       {subpage === 'profile' && (
         <div className=" flex gap-4 flex-col justify-center items-center  text-lg max-w-lg mx-auto">
           <p className="mb-3">Username : <span className="text-lg font-semibold text-yellow-400">{user.name}</span> </p>
-          <p >Email : <span className="text-lg font-semibold text-yellow-400">{user.email}</span> </p>
+          <p >Email_id : <span className="text-lg font-semibold text-yellow-400">{user.email}</span> </p>
           <button onClick={logout} className="primary max-w-sm mt-2">Logout</button>
         </div>
       )}

@@ -22,12 +22,13 @@ export default function RegisterPage() {
         email,
         password,
       });
-      setUser(data);
-      toast.success(`Hello ${data.name}`, {
+      setUser(data.user);
+      toast.success(`Hello ${data.user.name}`, {
         position : "top-right",
         autoClose: 3000,
         theme: "dark",
         });
+        localStorage.setItem('token', data.token);
         setRedirect(true);
 
     } catch (err) {

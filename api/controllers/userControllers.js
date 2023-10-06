@@ -32,13 +32,13 @@ const createUser = asyncHandler(async (req, res) => {
       id: userDoc._id
     }, process.env.JWT_SECRET, {}, (err, token) => {
       if (err) throw err;
-      res.cookie('token', token, {
-        httpOnly: true,
-        path: "/",
-        maxAge: 7 * 24 * 60 * 60 * 1000, // 7days
-        // maxAge: 20 * 1000 // 20 sec
-      })
-        .status(201).json(userDoc);
+      // res.cookie('token', token, {
+      //   httpOnly: true,
+      //   path: "/",
+      //   maxAge: 7 * 24 * 60 * 60 * 1000, // 7days
+      //   // maxAge: 20 * 1000 // 20 sec
+      // })
+      res.status(201).json({ user: userDoc, token: token });
     });
   }
   else {
@@ -66,13 +66,13 @@ const loginUser = asyncHandler(async (req, res) => {
         id: userDoc._id
       }, process.env.JWT_SECRET, {}, (err, token) => {
         if (err) throw err;
-        res.cookie('token', token, {
-          httpOnly: true,
-          path: "/",
-          maxAge: 7 * 24 * 60 * 60 * 1000, // 7days
-          // maxAge: 20 * 1000 // 20 sec
-        })
-          .json(userDoc);
+        // res.cookie('token', token, {
+        //   httpOnly: true,
+        //   path: "/",
+        //   maxAge: 7 * 24 * 60 * 60 * 1000, // 7days
+        //   // maxAge: 20 * 1000 // 20 sec
+        // })
+        res.status(200).json({ user: userDoc, token: token });
       });
     } else {
       res.status(400);
@@ -88,10 +88,14 @@ const loginUser = asyncHandler(async (req, res) => {
 // Taking User data
 // GET -- api/user/profile
 const userData = asyncHandler(async (req, res) => {
-  const { token } = req.cookies;
+  const token = req.query.token;
+  console.log(token);
   if (token) {
     jwt.verify(token, process.env.JWT_SECRET, {}, async (err, userData) => {
-      if (err) throw err;
+      if (err) {
+        res.status(401);
+        throw new Error("User is not authorized");
+      }
       const { name, email, _id } = await User.findById(userData.id);
       res.json({ name, email, _id });
     });
@@ -103,7 +107,8 @@ const userData = asyncHandler(async (req, res) => {
 // Logout user
 // POST -- api/user/logout
 const logoutUser = asyncHandler(async (req, res) => {
-  res.clearCookie('token', { path: '/' }).json(true);
+  res.status(200).json({ message: "Logged out" });
+  // res.clearCookie('token', { path: '/' }).json(true);
 })
 
 
