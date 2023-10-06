@@ -4,8 +4,8 @@ const jwt = require('jsonwebtoken');
 
 const jwtVerify = asyncHandler(async (req, res, next) => {
     const token = req.query.token;
-
-    if (token) {
+    // console.log(token);
+    if (token!=="null" && token) {
         jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
             try{
                 const userdata = await User.findById(decoded.id);
