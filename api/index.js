@@ -19,8 +19,9 @@ app.use(express.urlencoded({ limit: "10mb", extended: true, parameterLimit: 5000
 app.use(cookieParser());
 app.use(cors({
   credentials: true,
-  origin: 'https://homevista.vercel.app',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  // origin: 'https://homevista.vercel.app',
+  origin: 'https://www.homevista.live',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], //to enable requests from client
   // origin: 'http://localhost:5173',
 }));
 
