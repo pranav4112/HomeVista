@@ -17,7 +17,7 @@ export default function ProfilePage() {
 
   async function logout() {
     await axios.post(import.meta.env.VITE_APP_API + '/user/logout');
-    toast.success("Logout successfully", {
+    toast.success("Logged out successfully", {
       position : "top-right",
       autoClose: 3000,
       theme: "dark",
