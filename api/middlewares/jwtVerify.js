@@ -7,15 +7,16 @@ const jwtVerify = asyncHandler(async (req, res, next) => {
 
     if (token) {
         jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
-            if (err) {
-                res.status(401);
-                throw new Error("User is not authorized");
+            try{
+                const userdata = await User.findById(decoded.id);
+                req.user = userdata;
+                next();
             }
-
-            const userdata = await User.findById(decoded.id);
-            // console.log(userdata);
-            req.user = userdata;
-            next();
+            catch(err){
+                res.status(401);
+                next(err);
+                // throw new Error("User is not authorized");
+            }
         })
     }
     else {

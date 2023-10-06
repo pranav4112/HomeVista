@@ -13,7 +13,7 @@ export default function BookingWidget({place}) {
   const [name,setName] = useState('');
   const [phone,setPhone] = useState('');
   const [redirect,setRedirect] = useState('');
-  const {user} = useContext(UserContext);
+  const {user,setUser} = useContext(UserContext);
 
 
   let numberOfNights = 0;
@@ -23,7 +23,8 @@ export default function BookingWidget({place}) {
 
   async function bookThisPlace() {
     try{
-      const response = await axios.post(import.meta.env.VITE_APP_API  + '/bookings', {
+      const token = localStorage.getItem('token');
+      const response = await axios.post(import.meta.env.VITE_APP_API  + '/bookings'+`?token=${token}`, {
         checkIn,checkOut,numberOfGuests,name,phone,
         place:place._id,
         placeOwner : place.owner,
@@ -38,16 +39,19 @@ export default function BookingWidget({place}) {
       setRedirect(`/account/bookings/${bookingId}`);
     }
     catch (error) {
+      console.log(error);
       if(error.response.status === 401){
         toast.warning(`${error.response.data.message}`, {
           position: "top-right",
           autoClose: 3000,
           theme: "dark",
           });
+        setUser(null);
+        localStorage.removeItem('token');
         setRedirect("/login");
       }
       else{
-        toast.warning(`${error.response.data.message}`, {
+        toast.error(`${error.response.data.message}`, {
           position: "top-right",
           autoClose: 3000,
           theme: "dark",

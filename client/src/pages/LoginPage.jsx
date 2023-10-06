@@ -9,13 +9,14 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [redirect, setRedirect] = useState(false);
-  const {setUser} = useContext(UserContext);
+  const {setUser,setReady} = useContext(UserContext);
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
       const {data} = await axios.post(import.meta.env.VITE_APP_API + "/user/login", {email,password});
-      console.log(data);
+      // console.log(data);
       setUser(data.user);
+      setReady(true);
       toast.success(`Welcome ${data.user.name}`, {
         position : "top-right",
         autoClose: 3000,

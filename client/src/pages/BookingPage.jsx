@@ -1,22 +1,41 @@
-import {useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {useNavigate, useParams} from "react-router-dom";
+import {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import AddressLink from "../components/LocationLink/AddressLink";
 import PlaceGallery from "../components/PhotoGallery/PlaceGallery";
 import BookingDates from "../components/BookingSection/BookingDates";
+import { UserContext } from "../contextApi/UserContext";
 
 export default function BookingPage() {
   const {id} = useParams();
   const [booking,setBooking] = useState(null);
+  const {setUser} = useContext(UserContext);
+  const navigate = useNavigate();
   useEffect(() => {
-    if (id) {
-      axios.get(import.meta.env.VITE_APP_API + '/bookings').then(response => {
-        const foundBooking = response.data.find(({_id}) => _id === id);
-        if (foundBooking) {
-          setBooking(foundBooking);
-        }
-      });
+    try{
+      const token = localStorage.getItem('token');
+      if (id) {
+        axios.get(import.meta.env.VITE_APP_API + '/bookings'+`?token=${token}`).then(response => {
+          const foundBooking = response.data.find(({_id}) => _id === id);
+          if (foundBooking) {
+            setBooking(foundBooking);
+          }
+        });
+      }
     }
+    catch(err){
+      if(err.response.status === 401){
+        toast.warning(`${err.response.data.message}`, {
+          position: "top-right",
+          autoClose: 3000,
+          theme: "dark",
+          });
+          setUser(null);
+          localStorage.removeItem('token');
+          navigate('/login');
+      }
+    }
+    
   }, [id]);
 
   if (!booking) {

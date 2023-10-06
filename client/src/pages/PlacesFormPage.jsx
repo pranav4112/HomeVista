@@ -1,11 +1,12 @@
 import PhotosUploader from "../components/PlaceFormSection/PhotosUploader.jsx";
 import Perks from "../components/PlaceFormSection/Perks.jsx";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import AccountNav from "../components/AccountNavbar/AccountNav.jsx";
-import {Navigate, useParams} from "react-router-dom";
+import {Navigate, useNavigate, useParams} from "react-router-dom";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { UserContext } from "../contextApi/UserContext.jsx";
 
 export default function PlacesFormPage() {
   const {id} = useParams();
@@ -20,6 +21,8 @@ export default function PlacesFormPage() {
   const [maxGuests,setMaxGuests] = useState(1);
   const [price,setPrice] = useState(100);
   const [redirect,setRedirect] = useState(false);
+  const {setUser} = useContext(UserContext);
+  const navigate = useNavigate();
   useEffect(() => {
     if (!id) {
       return;
@@ -64,10 +67,11 @@ export default function PlacesFormPage() {
       description, perks, extraInfo,
       checkIn, checkOut, maxGuests, price,
     };
+    const token = localStorage.getItem('token');
     if (id) {
       // update
       try{
-        await axios.put(import.meta.env.VITE_APP_API + '/places', {
+        await axios.put(import.meta.env.VITE_APP_API + '/places'+`?token=${token}`, {
           id, ...placeData
         });
         toast.success("Property updated", {
@@ -83,14 +87,16 @@ export default function PlacesFormPage() {
           autoClose: 3000,
           theme: "dark",
           });
-          <Navigate to='/login' />
+          setUser(null);
+          localStorage.removeItem('token');
+          navigate('/login');
         
       }
       
     } else {
       // new place
       try{
-        await axios.post(import.meta.env.VITE_APP_API + '/places', placeData);
+        await axios.post(import.meta.env.VITE_APP_API + '/places'+`?token=${token}`, placeData);
         toast.success("Property Added successfully", {
         position : "top-right",
         autoClose: 3000,
@@ -105,10 +111,12 @@ export default function PlacesFormPage() {
           autoClose: 3000,
           theme: "dark",
           });
-          <Navigate to='/login' />
+          setUser(null);
+          localStorage.removeItem('token');
+          navigate('/login');
         }
         else if(err.response.status === 400){
-          toast.warning(`${err.response.data.message}`, {
+          toast.error(`${err.response.data.message}`, {
             position: "top-right",
             autoClose: 3000,
             theme: "dark",

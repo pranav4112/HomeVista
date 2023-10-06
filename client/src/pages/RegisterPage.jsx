@@ -11,7 +11,7 @@ export default function RegisterPage() {
   const [email,setEmail] = useState('');
   const [password,setPassword] = useState('');
   const [redirect, setRedirect] = useState(false);
-  const {setUser} = useContext(UserContext);
+  const {setUser,setReady} = useContext(UserContext);
 
   const  registerUser = async (e) => {
     e.preventDefault();
@@ -23,6 +23,7 @@ export default function RegisterPage() {
         password,
       });
       setUser(data.user);
+      setReady(true);
       toast.success(`Hello ${data.user.name}`, {
         position : "top-right",
         autoClose: 3000,

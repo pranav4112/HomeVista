@@ -1,18 +1,37 @@
 import AccountNav from "../components/AccountNavbar/AccountNav";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import PlaceImg from "../components/ImageSrc/PlaceImg";
-import {differenceInCalendarDays, format} from "date-fns";
-import {Link} from "react-router-dom";
+import {Link, Navigate, useNavigate} from "react-router-dom";
 import BookingDates from "../components/BookingSection/BookingDates";
-import AddressLink from "../components/LocationLink/AddressLink";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { UserContext } from "../contextApi/UserContext";
 
 export default function BookingsPage() {
   const [bookings,setBookings] = useState([]);
+  const {setUser} = useContext(UserContext);
+  const navigate = useNavigate();
   useEffect(() => {
-    axios.get(import.meta.env.VITE_APP_API + '/bookings').then(response => {
-      setBookings(response.data);
-    });
+    try{
+      const token = localStorage.getItem('token');
+      axios.get(import.meta.env.VITE_APP_API + '/bookings'+`?token=${token}`).then(response => {
+        setBookings(response.data);
+      });
+    }
+    catch(err){
+      if(err.response.status === 401){
+        toast.warning(`${err.response.data.message}`, {
+          position: "top-right",
+          autoClose: 3000,
+          theme: "dark",
+          });
+          setUser(null);
+          localStorage.removeItem('token');
+          navigate('/login');
+      }
+    }
+    
   }, []);
 
   return (

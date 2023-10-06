@@ -16,7 +16,7 @@ const errorHandler = (err, req, res, next) => {
         case 401:
             res.json({
                 title: "Unauthorized",
-                message: err.message,
+                message: err.message==="Login to proceed"? err.message : "User is not authorized",
             });
             break;
         case 403:

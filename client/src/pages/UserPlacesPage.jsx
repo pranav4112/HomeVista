@@ -1,16 +1,35 @@
-import {Link, useParams} from "react-router-dom";
+import {Link, Navigate, useNavigate, useParams} from "react-router-dom";
 import AccountNav from "../components/AccountNavbar/AccountNav";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import PlaceImg from "../components/ImageSrc/PlaceImg";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { UserContext } from "../contextApi/UserContext";
 
 export default function PlacesPage() {
   const [places,setPlaces] = useState([]);
+  const {setUser} = useContext(UserContext);
+  const navigate = useNavigate();
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    axios.get(import.meta.env.VITE_APP_API + '/user/user-places'+`?token=${token}`).then(({data}) => {
-      setPlaces(data);
-    });
+    try{
+      const token = localStorage.getItem('token');
+      axios.get(import.meta.env.VITE_APP_API + '/user/user-places'+`?token=${token}`).then(({data}) => {
+        setPlaces(data);
+      });
+    }
+    catch(err){
+      if(err.response.status === 401){
+        toast.warning(`${err.response.data.message}`, {
+          position: "top-right",
+          autoClose: 3000,
+          theme: "dark",
+          });
+          setUser(null);
+          localStorage.removeItem('token');
+          navigate('/login');
+      }
+    }
   }, []);
   
   return (

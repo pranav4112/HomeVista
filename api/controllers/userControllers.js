@@ -87,17 +87,21 @@ const loginUser = asyncHandler(async (req, res) => {
 
 // Taking User data
 // GET -- api/user/profile
-const userData = asyncHandler(async (req, res) => {
-  const token = req.query.token;
-  console.log(token);
+const userData = asyncHandler(async (req, res, next) => {
+  const {token} = req.query;
+  // console.log(token);
   if (token) {
     jwt.verify(token, process.env.JWT_SECRET, {}, async (err, userData) => {
-      if (err) {
-        res.status(401);
-        throw new Error("User is not authorized");
+      try{
+        const { name, email, _id } = await User.findById(userData.id);
+        res.json({ name, email, _id });
       }
-      const { name, email, _id } = await User.findById(userData.id);
-      res.json({ name, email, _id });
+      catch(err){
+        res.status(401);
+        next(err);
+        // throw new Error("User is not authorized");
+      }
+      
     });
   } else {
     res.json(null);

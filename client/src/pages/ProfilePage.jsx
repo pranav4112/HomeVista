@@ -2,7 +2,6 @@ import {useContext, useState} from "react";
 import {UserContext} from "../contextApi/UserContext.jsx";
 import {Link, Navigate, useParams} from "react-router-dom";
 import axios from "axios";
-import UserPlacesPage from "./UserPlacesPage.jsx";
 import AccountNav from "../components/AccountNavbar/AccountNav.jsx";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -22,7 +21,7 @@ export default function ProfilePage() {
       autoClose: 3000,
       theme: "dark",
       });
-      localStorage.removeItem('token');
+    localStorage.removeItem('token');
     setRedirect('/');
     setUser(null);
   }
