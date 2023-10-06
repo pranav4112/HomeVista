@@ -21,7 +21,7 @@ app.use(cors({
   credentials: true,
   // origin: 'https://homevista.vercel.app',
   origin: 'https://www.homevista.live',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], //to enable requests from client
   // origin: 'http://localhost:5173',
 }));
 
