@@ -13,7 +13,7 @@ export default function IndexPage() {
   }, []);
 
   return (
-    <div className="mt-8 rounded-2xl grid gap-x-6 gap-y-8 grid-cols-2 lg:grid-cols-3">
+    <div className="mt-8 rounded-2xl grid gap-x-6 gap-y-8 grid-cols-2 md:grid-cols-3">
       {places.length > 0 && places.map(place => (
         <Link to={'/place/'+place._id} className="hover:scale-105 transition-transform">
           <div className="mb-2 rounded-2xl flex">

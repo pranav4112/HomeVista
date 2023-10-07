@@ -44,14 +44,14 @@ export default function BookingPage() {
 
   return (
     <div className="my-10">
-      <h1 className="text-3xl">{booking.place.title}</h1>
-      <AddressLink className="my-2 block">{booking.place.address}</AddressLink>
-      <div className="bg-dark_bg my-6 rounded-2xl flex items-center justify-between">
+      <h1 className="md:text-3xl text-2xl">{booking.place.title}</h1>
+      <AddressLink className="my-2 block md:text-base text-sm ">{booking.place.address}</AddressLink>
+      <div className="bg-dark_bg my-6 rounded-2xl flex md:flex-row flex-col md:gap-0 gap-3 items-center justify-between">
         <div>
-          <h2 className="text-2xl mb-4">Your booking information:</h2>
-          <BookingDates booking={booking} />
+          <h2 className="md:text-2xl text-base mb-4">Your booking information:</h2>
+          <BookingDates className={"md:text-lg text-sm"} booking={booking} />
         </div>
-        <div className="bg-yellow-400 p-4 font-semibold text-xl text-dark_bg rounded-3xl">
+        <div className="bg-yellow-400 md:p-4 p-2 md:font-semibold md:text-xl text-sm text-dark_bg md:rounded-3xl rounded-lg">
           <div>Total price: <span className="font-bold">${booking.price}</span> </div>
         </div>
       </div>

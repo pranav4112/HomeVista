@@ -6,6 +6,7 @@ import PlaceImg from "../components/ImageSrc/PlaceImg";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { UserContext } from "../contextApi/UserContext";
+import AddressLink from "../components/LocationLink/AddressLink";
 
 export default function PlacesPage() {
   const [places,setPlaces] = useState([]);
@@ -43,15 +44,16 @@ export default function PlacesPage() {
           Add new place
         </Link>
       </div>
-      <div className="mt-6 flex flex-col gap-3">
+      <div className="mt-6 flex flex-col gap-3 md:mx-0 mx-3">
         {places.length > 0 && places.map(place => (
-          <Link to={'/account/places/'+place._id}  className="flex gap-3 bg-bcgr text-txt rounded-2xl overflow-hidden">
-            <div className="w-1/3">
+          <Link to={'/account/places/'+place._id}  className="flex md:flex-row flex-col md:gap-3 gap-1 bg-bcgr text-txt rounded-2xl overflow-hidden">
+            <div className="md:w-1/3">
               <PlaceImg className={"w-full h-full"} place={place} />
             </div>
-            <div className="p-5 pr-3 w-2/3 flex flex-col gap-3 text-gray-300">
+            <div className="md:p-5 p-3 md:pr-3 md:w-2/3 flex flex-col md:gap-3 text-gray-300">
               <h2 className="text-xl font-semibold text-center">{place.title}</h2>
-              <p className="mt-2 text-gray-400">{place.description}</p>
+              <p className="hidden md:block md:mt-2 text-gray-400">{place.description}</p>
+              <div className="md:hidden block mx-auto"><AddressLink>{place.address}</AddressLink></div>
             </div>
             
           </Link>

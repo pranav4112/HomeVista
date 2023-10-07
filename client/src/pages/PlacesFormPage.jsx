@@ -136,7 +136,7 @@ export default function PlacesFormPage() {
     <div>
       <AccountNav />
       <form onSubmit={savePlace}>
-        <div className=" rounded-2xl grid grid-cols-2 gap-3">
+        <div className=" rounded-2xl grid md:grid-cols-2 grid-cols-1 gap-3">
           <div className="bg-bcgr p-3 rounded-2xl">
             {preInput('Title', 'Title for your place. should be short and catchy as in advertisement')}
             <input type="text" className="bg-dark_bg text-txt" value={title} onChange={ev => setTitle(ev.target.value)} placeholder="title, for example: My lovely apt"/>
@@ -147,7 +147,7 @@ export default function PlacesFormPage() {
             <input type="text" className="bg-dark_bg text-txt" value={address} onChange={ev => setAddress(ev.target.value)} placeholder="Address..."/>
           </div>
           
-          <div className="bg-bcgr p-3 rounded-2xl col-span-2">
+          <div className="bg-bcgr p-3 rounded-2xl md:col-span-2">
             {preInput('Photos','more = better')}
             <PhotosUploader addedPhotos={addedPhotos} setAddedPhotos={setAddedPhotos} />
           </div>
@@ -162,9 +162,9 @@ export default function PlacesFormPage() {
             <Perks selected={perks} onChange={setPerks} />
           </div>
           
-          <div className="bg-bcgr p-3 rounded-2xl col-span-2">
+          <div className="bg-bcgr p-3 rounded-2xl md:col-span-2">
             {preInput('Check in&out times','add check in and out times, remember to have some time window for cleaning the room between guests')}
-            <div className="grid gap-3 grid-cols-2 ">
+            <div className="grid md:gap-3 gap-2 md:text-lg text-sm grid-cols-2 ">
               <div>
                 <h3 className="mt-2 mb-1">Check in time</h3>
                 <input type="text"
@@ -196,12 +196,12 @@ export default function PlacesFormPage() {
             </div>
           </div>     
 
-          <div className="bg-bcgr p-3 rounded-2xl col-span-2">
+          <div className="bg-bcgr p-3 rounded-2xl md:col-span-2">
             {preInput('Extra info','house rules, terms/conditions, etc')}
             <textarea className="bg-dark_bg text-txt" placeholder="Add some extra info..."  value={extraInfo} onChange={ev => setExtraInfo(ev.target.value)} />
           </div>
           
-          <div className=" col-span-2">
+          <div className="md:col-span-2">
             <button className="primary my-4 ">Save</button>
           </div>
         </div>
