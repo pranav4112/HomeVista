@@ -52,7 +52,7 @@ export default function BookingPage() {
           <BookingDates className={"md:text-lg text-sm"} booking={booking} />
         </div>
         <div className="bg-yellow-400 md:p-4 p-2 md:font-semibold md:text-xl text-sm text-dark_bg md:rounded-3xl rounded-lg">
-          <div>Total price: <span className="font-bold">${booking.price}</span> </div>
+          <div>Total price: <span className="font-bold">&#8377;{booking.price}</span> </div>
         </div>
       </div>
       <PlaceGallery place={booking.place} />

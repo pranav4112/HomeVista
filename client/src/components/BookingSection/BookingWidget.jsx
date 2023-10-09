@@ -67,7 +67,7 @@ export default function BookingWidget({place}) {
   return (
     <div className="bg-bcgr shadow p-4 rounded-2xl">
       <div className="text-2xl text-yellow-400 text-center">
-        Price: ${place.price} / per night
+        Price: &#8377;{place.price} / per night
       </div>
       <div className="rounded-2xl mt-4">
         <div className="flex lg:justify-around lg:flex-row flex-col">
@@ -118,7 +118,7 @@ export default function BookingWidget({place}) {
       <button onClick={bookThisPlace} className="primary mt-3">
         Book this place
         {numberOfNights > 0 && (
-          <span> ${numberOfNights * place.price}</span>
+          <span> &#8377;{numberOfNights * place.price}</span>
         )}
       </button>
     </div>
